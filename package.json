@@ -1,0 +1,12 @@
+{
+  "name": "awesome-calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^30.5.2"
+  }
+}
