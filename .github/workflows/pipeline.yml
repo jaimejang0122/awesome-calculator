@@ -1,0 +1,56 @@
+name: Build-Test-Deploy
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - run: test -f dist/index.js && test -f dist/build-info.txt && cat dist/build-info.txt
+      - run: npm test
+
+  deploy:
+    needs: [build, test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - run: ls dist
+      - name: Use secret
+        run: |
+          if [ -z "$API_KEY" ]; then echo "API_KEY missing"; exit 1; fi
+          echo "API Key: $API_KEY"
+          echo "Deploying dist/ (simulated)"
