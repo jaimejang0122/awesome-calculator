@@ -1,0 +1,30 @@
+name: Setup Node project
+description: Set up Node.js and install dependencies with an exact-match cache
+inputs:
+  node-version:
+    description: Node.js version to use
+    required: false
+    default: '20'
+  cache:
+    description: Cache node_modules when an exact dependency cache exists
+    required: false
+    default: 'true'
+outputs:
+  cache-hit:
+    description: Whether the exact dependency cache was restored
+    value: ${{ steps.cache.outputs.cache-hit }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+    - id: cache
+      if: inputs.cache == 'true'
+      uses: actions/cache@v4
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node${{ inputs.node-version }}-modules-${{ hashFiles('package-lock.json') }}
+    - if: inputs.cache != 'true' || steps.cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm ci
