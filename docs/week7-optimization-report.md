@@ -129,7 +129,7 @@ cache=false 두 run에서 cache step은 skipped였고 `npm ci`가 실행됐습�
 | PR 앱 변경 → preview | [42961646569](https://github.com/jaimejang0122/awesome-calculator/actions/runs/42961646569) | changes/test/preview 성공, staging/production skipped |
 | develop push 앱 변경 → staging | [42960190908](https://github.com/jaimejang0122/awesome-calculator/actions/runs/42960190908) | changes/test/staging 성공, preview/production skipped |
 | main push 앱 변경 → production | [42961868349](https://github.com/jaimejang0122/awesome-calculator/actions/runs/42961868349) | changes/test/production 성공. production 승인을 거쳐 완료 |
-| 문서 전용 변경 → 배포 skipped | 보고서 PR의 Main Pipeline 실행 링크를 PR 생성 후 추가 | app=false일 때 test와 deploy jobs가 skipped인지 확인 예정 |
+| 문서 전용 변경 → 배포 skipped | [보고서 PR Main Pipeline run 42964100822](https://github.com/jaimejang0122/awesome-calculator/actions/runs/42964100822) | changes 성공, test/deploy-preview/deploy-staging/deploy-production 모두 skipped |
 
 환경 보호 규칙 조회 결과:
 
