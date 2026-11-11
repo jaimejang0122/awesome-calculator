@@ -1,4 +1,4 @@
-# 7주차 GitHub Actions 최적화 실습 보고서
+# GitHub Actions 최적화 보고서
 
 측정일: 2026-11-11 (UTC 기준)  
 저장소: [jaimejang0122/awesome-calculator](https://github.com/jaimejang0122/awesome-calculator)
